@@ -1,0 +1,102 @@
+package analizadores; 
+import java_cup.runtime.*;
+import java.util.ArrayList;
+
+
+parser code 
+{:
+
+    public ArrayList<ArrayList> informacion;
+    /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+    } 
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        " no reconocido."); 
+    }  
+:} 
+
+terminal String CONJ;
+terminal String PTCOMA,MENOS,MAYOR,MENOR,COMA,LISTA,LLAVEABRE,LLAVECIERRE,DOBLEPORC,DOSPUNTOS;
+terminal String PUNTO,DISY,POR,MAS,PREG;
+terminal String SALTOL,CSIMPLE,CDOBLE;
+terminal String ID;
+terminal String INTERVALO;
+terminal String CADENA;
+
+non terminal inicio;
+non terminal ArrayList entrada;
+non terminal ArrayList conjuntos;
+non terminal conjunto;
+non terminal notacion;
+non terminal ArrayList expresiones;
+non terminal expresion;
+non terminal exprreg;
+non terminal ArrayList analizar;
+non terminal analisis;
+
+start with inicio;
+
+inicio ::= LLAVEABRE entrada:a LLAVECIERRE
+{:
+    //Acá se guarda la info, que es respectivamente la lista principal de instrucciones
+    //Esta info se guarda dentro del parser
+    parser.info=a;
+:}
+;
+
+entrada ::= 
+    conjuntos:a expresiones:b DOBLEPORC analizar:c  {:RESULT=new ArrayList<>(); RESULT.add(a); RESULT.add(b); RESULT.add(c);:}
+;
+
+conjuntos ::=
+    conjuntos:a conjunto:b      {:RESULT=a; RESULT.add(b);:}
+  | conjunto:a                  {:RESULT=new ArrayList(); RESULT.add(a);:}
+;
+
+expresiones ::=
+    expresiones:a expresion:b   {:RESULT=a; RESULT.add(b);:}
+  | expresion:a                 {:RESULT=new ArrayList(); RESULT.add(a);:}
+;
+
+analizar ::=
+    analizar:a analisis:b       {:RESULT=a; RESULT.add(b);:}
+  | analisis:a                  {:RESULT=new ArrayList(); RESULT.add(a);:}
+;
+
+conjunto ::= CONJ DOSPUNTOS ID:a MENOS MAYOR notacion:b PTCOMA {:RESULT=new Recopilador(a,b);:}
+;
+
+notacion ::= 
+    INTERVALO:a        {:RESULT=a;:}
+  | LISTA:a            {:RESULT=a;:}
+;
+
+ expresion ::= ID:a MENOS MAYOR exprreg:e PTCOMA      {:RESULT=new Recopilador(a,e);:}
+;
+
+exprreg ::=
+    PUNTO exprreg:e1 exprreg:e2             {:RESULT=".,"+e1+e2;:}
+  | LLAVEABRE ID:a LLAVECIERRE              {:RESULT="{"+a+"},";:}
+  | POR exprreg:e                           {:RESULT="*,"+;:}
+  | DISY exprreg:e1 exprreg:e2              {:RESULT="|,"+e1+e2;:}
+  | CDOBLE:a                                {:RESULT=a+",";:}
+  | CSIMPLE:a                               {:RESULT=a+",";:}
+  | MAS exprreg:e                           {:RESULT="+,"+e;:}
+  | PREG exprreg:e                          {:RESULT="?,"+e;:}
+  | CADENA:a                                {:RESULT=a+",";:}
+  | SALTOL:a                                {:RESULT=a+",";:}
+;
+
+analisis ::= ID:a DOSPUNTOS CADENA:b PTCOMA {:RESULT=new Recopilador(a,b);:}
+;
