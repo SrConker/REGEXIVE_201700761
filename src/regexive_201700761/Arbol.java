@@ -21,6 +21,6 @@ public class Arbol {
     ArrayList<ListaSiguiente> siguientes;
     ArrayList <ListaTransiciones> transiciones;
     public ArrayList<String> tokens;
-    NodoArbol raiz;
+    NodeArbol raiz;
     public String cadenaImprimir;
 }
