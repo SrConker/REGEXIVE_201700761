@@ -220,7 +220,8 @@ public class Arbol {
     public void analizarArbol(String nombre) throws IOException {
         this.raiz = new NodeArbol(0, ".");
         this.raiz.derecha = new NodeArbol(1, "#");
-        for (int i = 0; i < tokens.size(); i++) {
+        this.raiz.izquierda = new NodeArbol(2, tokens.get(0));
+        for (int i = 1; i < tokens.size(); i++) {
             NodeArbol nuevo = new NodeArbol(i+2, tokens.get(i));
             insertarNodo(false, this.raiz, nuevo);
         }
@@ -299,15 +300,15 @@ public class Arbol {
                     String tem = tabla[0][j + 1].replaceAll("\"", "");
                     String tem2 = "";
                     for (int k = 0; k < tem.length(); k++) {
-                        if (tem.charAt(i) == (char)123 || tem.charAt(i) == (char)125) {
+                        if (tem.charAt(k) == (char)123 || tem.charAt(k) == (char)125) {
                             
                         }else{
-                            tem2 += tem.charAt(i);
+                            tem2 += tem.charAt(k);
                         }
                     }
                     escape = "";
                     for (int k = 0; k < tem2.length(); k++) {
-                        if (Character.isDigit(tem2.charAt(i)) || Character.isLetter(tem2.charAt(i)) || tem2.charAt(i) == (char)32) {
+                        if (Character.isDigit(tem2.charAt(k)) || Character.isLetter(tem2.charAt(k)) || tem2.charAt(k) == (char)32) {
                             
                         }else{
                             escape = "\\";
