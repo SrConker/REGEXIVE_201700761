@@ -256,16 +256,16 @@ public class Arbol {
         lectura.write(this.cadenaImprimir);
         lectura.close();
         try{
-            String fileInputPath = ruta;
-            String fileOutPath = "AFD" + nombre + ".png";
-            String tParam = "-Tpng";
-            String toParam = "-o";
+            String rutaInicial = ruta;
+            String rutaFinal = "AFD" + nombre + ".png";
+            String comandoPNG = "-Tpng";
+            String comandoO = "-o";
             String[] cmd = new String[5];
             cmd[0] = Manejador.obtenerInstancia().getDPath();
-            cmd[1] = tParam;
-            cmd[2] = fileInputPath;
-            cmd[3] = toParam;
-            cmd[4] = fileOutPath;
+            cmd[1] = comandoPNG;
+            cmd[2] = rutaInicial;
+            cmd[3] = comandoO;
+            cmd[4] = rutaFinal;
             
             Runtime run = Runtime.getRuntime();
             run.exec(cmd);
@@ -277,9 +277,9 @@ public class Arbol {
     public void afdDOT(){
         cadenaImprimir += "rankir=LR;";
         cadenaImprimir += "edge [color=black];";
-        cadenaImprimir += "node [color = white,style=filled];";
+        cadenaImprimir += "node [color = red,style=filled];";
         for (int i = 0; i < transiciones.size(); i++) {
-            cadenaImprimir += "\"" + transiciones.get(i).getNombreEstado() + "\"" + "[ label=" + transiciones .get(i).getNombreEstado()+ "]" + '\n';
+            cadenaImprimir += "\"" + transiciones.get(i).getNombreEstado() + "\"" + "[ label=" + transiciones.get(i).getNombreEstado()+ "]" + '\n';
         }
         cadenaImprimir += "secret_node [style=invis];\n";
         cadenaImprimir += "secret_node -> S0 [label=\"inicio\"];";
@@ -361,9 +361,9 @@ public class Arbol {
             pw = new PrintWriter(fw);
             lectura = new BufferedWriter(new FileWriter(archivo));
             this.cadenaImprimir = "digraph ARBOL { " + '\n';
-            this.cadenaImprimir+="graph [label=\"Arbol: "+nombre+"\", labelloc=t, fontsize=20]; ";
+            this.cadenaImprimir+="graph [label=\"Arbol: "+nombre+"\", labelloc=t, fontsize=25]; ";
             this.cadenaImprimir += "rankdir=TB" + '\n';
-            this.cadenaImprimir += "node[shape=record,style=filled,color=\"0.619 0.714 0.714\"] " + '\n';
+            this.cadenaImprimir += "node[shape=record,style=filled,color=\"yellow\"] " + '\n';
             generarArbolID(raiz);
             this.cadenaImprimir += '\n' + "}";
             lectura.write(this.cadenaImprimir);
@@ -380,6 +380,7 @@ public class Arbol {
                 cmd[4] = fileOutPath;
                 Runtime run = Runtime.getRuntime();
                 run.exec(cmd);
+                System.out.println("PNG funcional :0");
             }catch (Exception e){
                 System.out.println(e);
             }
