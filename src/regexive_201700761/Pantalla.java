@@ -202,7 +202,31 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        //A analizar esta chingadera pues
+        if (ruta.equals("")) {
+            JOptionPane.showMessageDialog(null,"No se ha seleccionado archivo");
+        }else{
+            analizadores.Sintactico parse;
+            try {
+                parse = new analizadores.Sintactico(new analizadores.Lexico(new BufferedReader(new FileReader(ruta))));
+                parse.parse(); 
+                Manejador.obtenerInstancia().setConjuntos(parse.informacion.get(0));
+                Manejador.obtenerInstancia().setExpresiones(parse.informacion.get(1));
+                Manejador.obtenerInstancia().setAnalisis(parse.informacion.get(2));
+                System.out.println("Todo correcto y yo que me alegro :D");
+                    for(Recopilador reco: Manejador.obtenerInstancia().getExpresiones()){
+                        System.out.println(reco.toString());
+                    }
+            } catch (Exception ex) {
+                System.out.println("Error fatal en compilación de entrada.");
+                System.out.println("Causa: "+ex.getCause());
+            }
+            try {
+                Manejador.obtenerInstancia().llenadoArbolito();
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Pantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -216,7 +240,7 @@ public class Pantalla extends javax.swing.JFrame {
             try {
                 File archivo = pantallaCarga.getSelectedFile();
                 String RutaM = pantallaCarga.getSelectedFile().getAbsolutePath();
-                if (ruta.endsWith(".OLC") || ruta.endsWith(".Olc") || ruta.endsWith(".olc")) {
+                if (RutaM.endsWith(".OLC") || RutaM.endsWith(".Olc") || RutaM.endsWith(".olc")) {
                     file = new FileReader(archivo);
                     buff = new BufferedReader(file);
                     String linea;

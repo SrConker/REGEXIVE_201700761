@@ -34,30 +34,30 @@ public class Arbol {
         cantidadNodos = 1;
     }
     
-    public boolean insertarNodo(Boolean bandera, NodeArbol raiz, NodeArbol nuevo){
+    public boolean insertarNodo(Boolean condicion, NodeArbol raiz, NodeArbol nuevo){
         if (raiz.izquierda != null) {
-            bandera = insertarNodo(bandera, raiz.izquierda, nuevo);
+            condicion = insertarNodo(condicion, raiz.izquierda, nuevo);
         }
         if (raiz.derecha != null) {
-            bandera = insertarNodo(bandera, raiz.derecha, nuevo);
+            condicion = insertarNodo(condicion, raiz.derecha, nuevo);
         }
-        if (!bandera) {
+        if (!condicion) {
             if (raiz.id.equals("*") || raiz.id.equals("?") || raiz.id.equals("+") || raiz.id.equals("|") || raiz.id.equals(".")) {
                 if (raiz.izquierda == null && raiz.derecha == null) {
                     raiz.izquierda = nuevo;
-                    bandera = true;
+                    condicion = true;
                 } else if ((raiz.id.equals("+") || raiz.id.equals("?") || raiz.id.equals("*")) && raiz.izquierda == null) {
                    raiz.izquierda = nuevo;
-                   bandera = true;
+                   condicion = true;
                 }else if (raiz.id.equals("|") || raiz.id.equals(".")) {
                     if (raiz.izquierda != null && raiz.derecha == null) {
                         raiz.derecha = nuevo;
-                        bandera = true;
+                        condicion = true;
                     }
                 }
             }
         }
-        return bandera;
+        return condicion;
     }
     
     public void anulables(NodeArbol raiz){
@@ -217,12 +217,11 @@ public class Arbol {
         tokens.add(token);
     }
     
-    public void analizar(String nombre) throws IOException {
+    public void analizarArbol(String nombre) throws IOException {
         this.raiz = new NodeArbol(0, ".");
         this.raiz.derecha = new NodeArbol(1, "#");
-        this.raiz.izquierda = new NodeArbol(2, tokens.get(0));
         for (int i = 0; i < tokens.size(); i++) {
-            NodeArbol nuevo = new NodeArbol(i+3, tokens.get(i));
+            NodeArbol nuevo = new NodeArbol(i+2, tokens.get(i));
             insertarNodo(false, this.raiz, nuevo);
         }
         anulables(this.raiz);

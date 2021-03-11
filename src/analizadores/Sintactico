@@ -61,7 +61,7 @@ inicio ::= LLAVEABRE entrada:a LLAVECIERRE
 ;
 
 entrada ::= 
-    conjuntos:a expresiones:b DOBLEPORC analizar:c  {:RESULT=new ArrayList<>(); RESULT.add(a); RESULT.add(b); RESULT.add(c);:}
+    conjuntos:a expresiones:b DOBLEPORC DOBLEPORC analizar:c  {:RESULT=new ArrayList<>(); RESULT.add(a); RESULT.add(b); RESULT.add(c);:}
 ;
 
 conjuntos ::=
@@ -93,7 +93,7 @@ notacion ::=
 exprreg ::=
     PUNTO exprreg:e1 exprreg:e2             {:RESULT=".,"+e1+e2;:}
   | LLAVEABRE ID:a LLAVECIERRE              {:RESULT="{"+a+"},";:}
-  | POR exprreg:e                           {:RESULT="*,"+;:}
+  | POR exprreg:e                           {:RESULT="*,"+e;:}
   | DISY exprreg:e1 exprreg:e2              {:RESULT="|,"+e1+e2;:}
   | CDOBLE:a                                {:RESULT=a+",";:}
   | CSIMPLE:a                               {:RESULT=a+",";:}

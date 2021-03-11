@@ -126,11 +126,11 @@ public class Manejador {
         expresiones = new ArrayList<>();
         conjuntos = new ArrayList<>();
         analizar = new ArrayList<>();
-        dotPATH = "D:\\Graphviz\\bin\\dot.exe";
+        dotPATH = "C:\\Graphviz\\bin\\dot.exe";
         validacionJson = new ArrayList<>();
     }
     
-    public void procesoArbolito() throws IOException{
+    public void llenadoArbolito() throws IOException{
         for (Recopilador expresion:expresiones) {
             String expr = (String)expresion.valor;
             String[] datos = expr.split(",");
@@ -138,7 +138,7 @@ public class Manejador {
             for (String dato : datos) {
                 nuevo.insertarToken(dato);
             }
-            nuevo.analizar(expresion.nombre);
+            nuevo.analizarArbol(expresion.nombre);
         }
     }
 }
