@@ -22,7 +22,7 @@ public class ListaSiguiente {
         return numeroNodo;
     }
 
-    public void setSiguientes(ArrayList<Integer> siguientes) {
-        this.siguientes = siguientes;
+    public void setSiguiente(int siguiente) {
+        siguientes.add(siguiente);
     }
 }

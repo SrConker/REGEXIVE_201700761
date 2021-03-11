@@ -34,8 +34,8 @@ public class ListaTransiciones {
         this.nombreEstado = nombreEstado;
     }
 
-    public void setID_estado(ArrayList<Integer> ID_estado) {
-        this.ID_estado = ID_estado;
+    public void setID_estado(int posicion) {
+        this.ID_estado.add(posicion);
     }
     
     public void setTransicion(String encabezado, String nuevoEstado){
