@@ -134,7 +134,11 @@ public class Manejador {
         for (Recopilador expresion:expresiones) {
             String expr = (String)expresion.valor;
             String[] datos = expr.split(",");
-            
+            Arbol nuevo = new Arbol();
+            for (String dato : datos) {
+                nuevo.insertarToken(dato);
+            }
+            nuevo.analizar(expresion.nombre);
         }
     }
 }

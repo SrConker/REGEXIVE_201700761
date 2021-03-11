@@ -1,6 +1,11 @@
+/*
+    201700761
+*/
+
 package analizadores; 
 import java_cup.runtime.*;
 import java.util.ArrayList;
+import regexive_201700761.Recopilador;
 
 
 parser code 

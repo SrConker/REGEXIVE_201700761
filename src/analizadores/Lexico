@@ -1,5 +1,11 @@
+/*
+    201700761
+*/
+
 package analizadores;
 import java_cup.runtime.Symbol; 
+import regexive_201700761.ErrorLexico;
+import regexive_201700761.Manejador;
 
 %% 
 %class Lexico
@@ -41,7 +47,7 @@ LISTA = {CARACTER} (","{CARACTER})*
     ">"    {return new Symbol(sym.MAYOR,yyline,yychar, yytext());}
     "<"     {return new Symbol(sym.MENOR,yyline,yychar, yytext());}
     "{"     {return new Symbol(sym.LLAVEABRE,yyline,yychar, yytext());} 
-    "}"     {return new Symbol(sym.LLAVECIERRA,yyline,yychar, yytext());} 
+    "}"     {return new Symbol(sym.LLAVECIERRE,yyline,yychar, yytext());} 
     ","     {return new Symbol(sym.COMA,yyline,yychar,yytext());}
 
     "."     {return new Symbol(sym.PUNTO,yyline,yychar, yytext());} 

@@ -239,7 +239,7 @@ public class Arbol {
     public void generarReportes(String nombre) throws IOException{
         graficarArbol(nombre);
         graficarSiguientes(nombre);
-        graficarEstado(nombre);
+        graficarEstados(nombre);
         generarAFD(nombre);
     }
     
@@ -364,7 +364,7 @@ public class Arbol {
             this.cadenaImprimir+="graph [label=\"Arbol: "+nombre+"\", labelloc=t, fontsize=20]; ";
             this.cadenaImprimir += "rankdir=TB" + '\n';
             this.cadenaImprimir += "node[shape=record,style=filled,color=\"0.619 0.714 0.714\"] " + '\n';
-            generarArbolD(raiz);
+            generarArbolID(raiz);
             this.cadenaImprimir += '\n' + "}";
             lectura.write(this.cadenaImprimir);
             try{
